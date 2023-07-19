@@ -1,5 +1,11 @@
-{% extends 'main.html' %} {% load static %} {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'base/room.css' %}" />
+{% extends 'main.html' %} {% block content %}
+
+<style>
+  .room-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+</style>
 
 <div class="room-container">
   <div>
