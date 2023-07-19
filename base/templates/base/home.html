@@ -10,20 +10,16 @@
 <h1>Home Template</h1>
 
 <div class="home-container">
-  <div>
-    {% include "base/topics_component.html" %}
-  </div>
+  <div>{% include "base/topics_component.html" %}</div>
 
   <div>
     <h5>{{room_count}} threads available</h5>
     <a href="{% url 'create-room' %}">Create Thread</a>
-    
+
     {% include "base/feed_component.html" %}
   </div>
 
-  <div>
-    {% include "base/activity_component.html" %}
-  </div>
+  <div>{% include "base/activity_component.html" %}</div>
 </div>
 
 {% endblock content %}
