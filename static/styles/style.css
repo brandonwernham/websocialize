@@ -13,7 +13,7 @@
   --color-success: #5dd693;
   --color-error: #fc4b0b;
 
-  --transition: all 0.8s ease-in-out;
+  --transition: all 0.1s ease-in-out;
 }
 
 /*========== base styles ==========*/
@@ -430,7 +430,7 @@ a {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -46%);
+  transform: translate(-50%, -45%);
   background-color: var(--color-dark);
   border-radius: 1rem;
   box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);

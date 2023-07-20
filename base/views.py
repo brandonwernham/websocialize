@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Count
 
 # Create your views here.
 
@@ -68,7 +69,9 @@ def home(request):
         Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q)
     )
 
-    topics = Topic.objects.all()
+    topics = Topic.objects.annotate(room_count=Count("room")).order_by("-room_count")[
+        :5
+    ]
     room_count = rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
 
@@ -199,3 +202,14 @@ def updateUser(request):
             return redirect("user-profile", pk=user.id)
 
     return render(request, "base/update-user.html", {"form": form})
+
+
+def topicsPage(request):
+    q = request.GET.get("q") if request.GET.get("q") != None else ""
+    topics = Topic.objects.filter(name__icontains=q)
+    return render(request, "base/topics.html", {"topics": topics})
+
+
+def activityPage(request):
+    room_messages = Message.objects.all()
+    return render(request, "base/activity.html", {"room_messages": room_messages})
