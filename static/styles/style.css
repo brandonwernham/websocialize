@@ -992,8 +992,7 @@ a {
 }
 
 .room__header {
-  max-height: 30vh;
-  overflow-y: auto;
+  max-height: 25vh;
   position: absolute;
   width: 95%;
   background: var(--color-dark);
@@ -1001,6 +1000,7 @@ a {
   top: 4.4rem;
   padding-top: 2rem;
   padding-bottom: 1rem;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 560px) {
