@@ -116,7 +116,11 @@ def userProfile(request, pk):
     user = User.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages = user.message_set.all()
-    topics = Topic.objects.all()
+    topics = (
+        Topic.objects.annotate(room_count=Count("room"))
+        .filter(room_count__gt=0)
+        .order_by("-room_count")[:5]
+    )
 
     context = {
         "user": user,
@@ -136,12 +140,14 @@ def createRoom(request):
         topic_name = request.POST.get("topic")
         topic, created = Topic.objects.get_or_create(name=topic_name)
 
-        Room.objects.create(
+        new_room = Room.objects.create(
             host=request.user,
             topic=topic,
             name=request.POST.get("name"),
             description=request.POST.get("description"),
         )
+        new_room.participants.add(request.user)
+
         return redirect("home")
 
     context = {"form": form, "topics": topics}

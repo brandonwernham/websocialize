@@ -1,26 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
-  --color-main: #71c6dd;
-  --color-main-light: #e1f6fb;
-  --color-dark: #3f4156;
-  --color-dark-medium: #51546e;
-  --color-dark-light: #696d97;
-  --color-light: #e5e5e5;
+  --color-main: #ff3067;
+  --color-main-light: #f5f5ff;
+  --color-dark: rgba(255, 255, 255, 0.4);
+  --color-dark-medium: #3b2a82;
+  --color-dark-light: #3b2a82;
+  --color-light: #3b2a82;
   --color-gray: #8b8b8b;
-  --color-light-gray: #b2bdbd;
-  --color-bg: #2d2d39;
+  --color-light-gray: #7a719b;
+  --color-bg: rgba(59, 42, 130, 0.06);
   --color-success: #5dd693;
   --color-error: #fc4b0b;
 
   --transition: all 0.1s ease-in-out;
+
+  --border-radius: 15px;
 }
 
 /*========== base styles ==========*/
 
 * {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "DM Sans", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -80,8 +81,8 @@ a {
   cursor: pointer;
   transition: var(--transition);
   padding: 1rem 2rem;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  border-radius: var(--border-radius);
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.2);
   font-weight: 500;
 }
 
@@ -97,8 +98,16 @@ a {
 }
 
 .btn--main {
-  background-color: var(--color-main);
-  color: var(--color-dark);
+  background: linear-gradient(
+    90deg,
+    #5014ad,
+    #8e13a6 25%,
+    #c5109a 51%,
+    #f22379 79%,
+    #ff3067
+  );
+  color: var(--color-main-light);
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.2);
 }
 
 .btn:hover {
@@ -107,11 +116,11 @@ a {
 
 .btn--dark {
   background-color: var(--color-dark-light);
-  color: var(--color-light);
+  color: var(--color-main-light);
 }
 
 .btn > svg {
-  fill: currentColor;
+  fill: var(--color-main-light);
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -147,7 +156,7 @@ a {
   object-position: center;
 }
 
-.avatar::after {
+/* .avatar::after {
   content: "";
   display: block;
   position: absolute;
@@ -155,7 +164,7 @@ a {
   z-index: 111;
   border-radius: 50%;
   border: 0.3rem solid var(--color-dark);
-}
+} */
 
 .avatar.active::after {
   background-color: var(--color-success);
@@ -202,7 +211,7 @@ a {
 
 .scroll::-webkit-scrollbar {
   width: 0.6rem;
-  background-color: rgb(41, 41, 46);
+  background-color: var(--color-main-light);
 }
 
 .scroll::-webkit-scrollbar-thumb {
@@ -216,7 +225,7 @@ a {
   top: 5rem;
   right: 0.5rem;
   background: var(--color-dark-light);
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   display: none;
@@ -229,7 +238,7 @@ a {
 .dropdown-menu a {
   padding: 1.2rem 4rem;
   display: block;
-  color: var(--color-light) !important;
+  color: var(--color-main-light) !important;
   font-weight: 500;
   font-size: 1.4rem;
 }
@@ -239,11 +248,11 @@ a {
 }
 
 .dropdown-menu > a:not(:last-child) {
-  border-bottom: 1px solid var(--color-dark-medium);
+  border-bottom: 1px solid var(--color-light-gray);
 }
 
 .dropdown-menu a svg {
-  fill: var(--color-light);
+  fill: var(--color-main-light);
 }
 
 .mobile-menu {
@@ -270,6 +279,12 @@ a {
 .header {
   padding: 1.5rem;
   background-color: var(--color-dark);
+  box-shadow: 14px 14px 10px rgba(59, 42, 130, 0.05);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(50px);
+  z-index: 200;
 }
 
 .header > .container {
@@ -277,7 +292,11 @@ a {
   gap: 9.5rem;
 }
 
-.header__logo,
+.header__logo {
+  display: flex;
+  align-items: center;
+}
+
 .header__user {
   display: flex;
   gap: 2rem;
@@ -296,12 +315,13 @@ a {
 }
 
 .header__search > label {
-  background-color: var(--color-dark-medium);
+  background-color: var(--color-main-light);
   padding: 1.3rem 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  border-radius: 4px;
+  border: 1px solid var(--color-dark-medium);
+  border-radius: var(--border-radius);
 }
 
 .header__search svg {
@@ -316,10 +336,10 @@ a {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--color-light);
+  color: var(--color-dark-medium);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 960px) {
   .header__search input {
     width: 20rem;
   }
@@ -335,7 +355,7 @@ a {
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 560px) {
   .header__search {
     display: none;
   }
@@ -392,7 +412,7 @@ a {
 ================================*/
 
 .layout {
-  margin-top: 2.4rem;
+  margin-top: 10rem;
 }
 
 .layout > .container {
@@ -432,8 +452,8 @@ a {
   left: 50%;
   transform: translate(-50%, -45%);
   background-color: var(--color-dark);
-  border-radius: 1rem;
-  box-shadow: 1px 1px 6px 3px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.2);
   overflow: hidden;
 }
 
@@ -452,13 +472,13 @@ a {
 .layout__boxTitle h3 {
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-light);
+  color: var(--color-main-light);
 }
 
 .layout__boxTitle svg {
   width: 1.6rem;
   height: 1.6rem;
-  fill: var(--color-main);
+  fill: var(--color-main-light);
 }
 
 .layout__body {
@@ -502,7 +522,7 @@ a {
   background: transparent;
   border: 1px solid var(--color-dark-light);
   padding: 1rem;
-  border-radius: 3px;
+  border-radius: var(--border-radius);
   width: 100%;
   color: var(--color-light);
   font-weight: 500;
@@ -589,10 +609,11 @@ a {
 .topics__list li a span {
   padding: 0.5rem 1rem;
   background-color: var(--color-dark);
-  border-radius: 3px;
+  border-radius: var(--border-radius);
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 1px;
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.4);
 }
 
 .topics-page a:hover {
@@ -610,7 +631,7 @@ a {
   display: block;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 560px) {
   .mobile-menu .header__search {
     display: block;
     margin-bottom: 2.4rem;
@@ -645,8 +666,9 @@ a {
 .roomListRoom {
   margin-bottom: 2.4rem;
   background-color: var(--color-dark);
-  border-radius: 1rem;
+  border-radius: var(--border-radius);
   padding: 2rem;
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.2);
 }
 
 .roomListRoom__header {
@@ -723,9 +745,10 @@ a {
 .roomListRoom__topic {
   padding: 5px 1.5rem;
   background-color: var(--color-dark-medium);
-  border-radius: 5rem;
+  border-radius: var(--border-radius);
   font-weight: 500;
   font-size: 1.3rem;
+  color: var(--color-main-light);
 }
 
 /*==============================
@@ -734,8 +757,9 @@ a {
 
 .activities {
   background: var(--color-dark);
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   overflow: hidden;
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.2);
 }
 
 .activities__header h2 {
@@ -743,7 +767,7 @@ a {
   text-transform: uppercase;
   font-weight: 500;
   padding: 1rem 1.5rem;
-  color: var(--color-light);
+  color: var(--color-main-light);
   letter-spacing: 1px;
   font-size: 1.4rem;
 }
@@ -751,8 +775,8 @@ a {
 .activities__box {
   margin: 1.5rem;
   padding: 1.5rem;
-  border: 2px solid var(--color-dark-medium);
-  border-radius: 5px;
+  border: 2px solid var(--color-bg);
+  border-radius: var(--border-radius);
 }
 
 .activities__boxHeader p {
@@ -781,9 +805,10 @@ a {
 .activities__boxRoomContent {
   background: var(--color-bg);
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   margin-top: 1rem;
   margin-left: -4.2rem;
+  color: var(--color-dark-medium);
 }
 
 .roomListRoom__actions svg {
@@ -904,9 +929,10 @@ a {
 .participants {
   background: var(--color-dark);
   max-height: 87.5vh;
-  border-radius: 0.7rem;
+  border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
+  box-shadow: 14px 14px 60px rgba(59, 42, 130, 0.2);
 }
 
 @media screen and (max-width: 900px) {
@@ -953,7 +979,7 @@ a {
 .room__topLeft svg {
   width: 1.6rem;
   height: 1.6rem;
-  fill: var(--color-light);
+  fill: var(--color-main-light);
 }
 
 .room__topRight {
@@ -977,7 +1003,7 @@ a {
   padding-bottom: 1rem;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 560px) {
   .room__header {
     top: 4.3rem;
     padding-right: 2rem;
@@ -992,7 +1018,7 @@ a {
   padding-bottom: 0;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 560px) {
   .room__box {
     padding-left: 2.5rem;
     padding-right: 2rem;
@@ -1036,10 +1062,10 @@ a {
 .room__topics {
   padding: 0.5rem 1.5rem;
   background: var(--color-dark-light);
-  color: var(--color-light);
+  color: var(--color-main-light);
   display: inline-block;
   font-size: 1.4rem;
-  border-radius: 1.5rem;
+  border-radius: var(--border-radius);
   margin: 1rem 0;
 }
 
@@ -1057,7 +1083,7 @@ a {
 
 .threads {
   background: var(--color-bg);
-  border-radius: 0.7rem;
+  border-radius: var(--border-radius);
   overflow-y: auto;
   height: 100%;
   margin-top: 28vh;
@@ -1112,10 +1138,10 @@ a {
 .room__message > form > input {
   resize: none;
   background-color: var(--color-dark-light);
-  color: var(--color-light);
+  color: var(--color-main-light);
   border: none;
   outline: none;
-  border-radius: 0.7rem;
+  border-radius: var(--border-radius);
   height: 4.5rem;
   width: 100%;
   margin-top: -1rem;
@@ -1130,7 +1156,7 @@ a {
 }
 
 .participants__top span {
-  color: var(--color-main);
+  color: var(--color-main-light);
   font-size: 1.3rem;
   text-transform: none;
 }
