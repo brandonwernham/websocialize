@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import Count
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
@@ -19,15 +20,16 @@ def loginPage(request):
         return redirect("home")
 
     if request.method == "POST":
-        email = request.POST.get("email").lower()
+        username = request.POST.get("username").lower()
         password = request.POST.get("password")
 
         try:
-            user = User.objects.get(email=email)
-        except:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
             messages.error(request, "User does not exist.")
+            return render(request, "base/login_register.html", {"page": page})
 
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
@@ -73,9 +75,11 @@ def home(request):
         Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q)
     )
 
-    topics = Topic.objects.annotate(room_count=Count("room")).order_by("-room_count")[
-        :5
-    ]
+    topics = (
+        Topic.objects.annotate(room_count=Count("room"))
+        .filter(room_count__gt=0)
+        .order_by("-room_count")[:5]
+    )
     room_count = rooms.count()
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
 
@@ -219,7 +223,12 @@ def updateUser(request):
 
 def topicsPage(request):
     q = request.GET.get("q") if request.GET.get("q") != None else ""
-    topics = Topic.objects.filter(name__icontains=q)
+    topics = (
+        Topic.objects.filter(name__icontains=q)
+        .annotate(room_count=Count("room"))
+        .filter(room_count__gt=0)
+        .order_by("-room_count")
+    )
     return render(request, "base/topics.html", {"topics": topics})
 
 
