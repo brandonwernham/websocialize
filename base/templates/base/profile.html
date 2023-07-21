@@ -10,7 +10,10 @@
       <div class="profile">
         <div class="profile__avatar">
           <div class="avatar avatar--large active">
-            <img src="" />
+            <img
+              src="{{user.profile.avatar.url}}"
+              alt="{{user.username}} profile picture"
+            />
           </div>
         </div>
         <div class="profile__info">
@@ -24,7 +27,7 @@
         </div>
         <div class="profile__about">
           <h3>About</h3>
-          <p>{{user.bio}}</p>
+          <p>{{user.profile.bio}}</p>
         </div>
       </div>
 

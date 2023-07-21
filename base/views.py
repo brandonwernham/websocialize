@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
-from .models import Room, Topic, Message
-from .forms import RoomForm, UserForm
+from .models import Room, Topic, Message, Profile
+from .forms import RoomForm, UserUpdateForm, ProfileUpdateForm, RegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Count
 
 # Create your views here.
@@ -46,18 +45,23 @@ def logoutUser(request):
 
 
 def registerPage(request):
-    form = UserCreationForm()
-
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+
+            Profile.objects.create(
+                user=user,
+            )
+
             login(request, user)
             return redirect("home")
         else:
             messages.error(request, "An error occurred during registration.")
+    else:
+        form = RegisterForm()
 
     return render(request, "base/login_register.html", {"form": form})
 
@@ -192,16 +196,25 @@ def deleteMessage(request, pk):
 
 @login_required(login_url="login")
 def updateUser(request):
-    user = request.user
-    form = UserForm(instance=user)
-
     if request.method == "POST":
-        form = UserForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect("user-profile", pk=user.id)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile
+        )
 
-    return render(request, "base/update-user.html", {"form": form})
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect("home")
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form,
+    }
+    return render(request, "base/update-user.html", context)
 
 
 def topicsPage(request):
