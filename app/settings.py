@@ -20,7 +20,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = "postgresql://postgres:tPglgORt0VqfbsYQVICW@containers-us-west-86.railway.app:5657/railway"
 
 
 # Quick-start development settings - unsuitable for production
@@ -94,11 +94,11 @@ DATABASES = {
     "default": {
         #'ENGINE': 'django.db.backends.sqlite3',
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("PGDATABASE"),
-        "USER": os.environ.get("PGUSER"),
-        "PASSWORD": os.environ.get("PGPASSWORD"),
-        "HOST": os.environ.get("PGHOST"),
-        "PORT": os.environ.get("PGPORT"),
+        "NAME": "railway",
+        "USER": "postgres",
+        "PASSWORD": "tPglgORt0VqfbsYQVICW",
+        "HOST": "containers-us-west-86.railway.app",
+        "PORT": "5657",
     },
 }
 
