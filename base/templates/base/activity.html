@@ -30,9 +30,21 @@
               href="{% url 'user-profile' message.user.id %}"
               class="roomListRoom__author"
             >
+              {% if message.user.profile.avatar %}
               <div class="avatar avatar--small">
-                <img src="{{message.user.profile.avatar.url}}" />
+                <img
+                  src="{{ message.user.profile.avatar.url }}"
+                  alt="{{ message.user.username }}'s avatar"
+                />
               </div>
+              {% else %}
+              <div class="avatar avatar--small">
+                <img
+                  src="{% static 'images/avatar.svg' %}"
+                  alt="{{ message.user.username }}'s avatar"
+                />
+              </div>
+              {% endif %}
               <p>
                 @{{message.user}}
                 <span>{{message.created|timesince}} ago</span>

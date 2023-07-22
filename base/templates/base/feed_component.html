@@ -5,9 +5,21 @@
       href="{% url 'user-profile' room.host.id %}"
       class="roomListRoom__author"
     >
+      {% if room.host.profile.avatar %}
       <div class="avatar avatar--small">
-        <img src="{{room.host.profile.avatar.url}}" />
+        <img
+          src="{{ room.host.profile.avatar.url }}"
+          alt="{{ room.host.username }}'s avatar"
+        />
       </div>
+      {% else %}
+      <div class="avatar avatar--small">
+        <img
+          src="{% static 'images/avatar.svg' %}"
+          alt="{{ room.host.username }}'s avatar"
+        />
+      </div>
+      {% endif %}
       <span>@{{room.host.username}}</span>
     </a>
     <div class="roomListRoom__actions">
