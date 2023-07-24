@@ -25,9 +25,8 @@ def loginPage(request):
 
         try:
             user = User.objects.get(username=username)
-        except User.DoesNotExist:
+        except:
             messages.error(request, "User does not exist.")
-            return render(request, "base/login_register.html", {"page": page})
 
         user = authenticate(request, username=username, password=password)
 
@@ -35,7 +34,7 @@ def loginPage(request):
             login(request, user)
             return redirect("home")
         else:
-            messages.error(request, "Email OR password does not exist.")
+            messages.error(request, "Username OR password does not exist.")
 
     context = {"page": page}
     return render(request, "base/login_register.html", context)
@@ -47,6 +46,8 @@ def logoutUser(request):
 
 
 def registerPage(request):
+    form = RegisterForm()
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -61,9 +62,10 @@ def registerPage(request):
             login(request, user)
             return redirect("home")
         else:
-            messages.error(request, "An error occurred during registration.")
-    else:
-        form = RegisterForm()
+            messages.error(
+                request,
+                "An error occurred during registration. Make sure password is unique and at least 8 characters long.",
+            )
 
     return render(request, "base/login_register.html", {"form": form})
 

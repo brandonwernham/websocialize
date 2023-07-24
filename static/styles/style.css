@@ -266,7 +266,7 @@ a {
   gap: 1rem;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 620px) {
   .mobile-menu {
     display: none;
   }
@@ -283,6 +283,7 @@ a {
   position: fixed;
   top: 0;
   width: 100%;
+  -webkit-backdrop-filter: blur(50px);
   backdrop-filter: blur(50px);
   z-index: 2000;
 }
@@ -304,13 +305,13 @@ a {
 }
 
 .header__logo > img {
-  height: 3.2rem;
-  width: 3.2rem;
+  height: 5rem;
+  width: 5rem;
 }
 
 .header__logo > h1 {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 3rem;
   color: var(--color-light);
 }
 
@@ -349,13 +350,13 @@ a {
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 760px) {
   .header__logo h1 {
     display: none;
   }
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 620px) {
   .header__search {
     display: none;
   }
@@ -631,7 +632,7 @@ a {
   display: block;
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 619px) {
   .mobile-menu .header__search {
     display: block;
     margin-bottom: 2.4rem;
@@ -992,38 +993,35 @@ a {
 }
 
 .room__header {
-  max-height: 25vh;
-  position: absolute;
+  max-height: auto;
   width: 95%;
   background: var(--color-dark);
   z-index: 999;
   top: 4.4rem;
   padding-top: 2rem;
   padding-bottom: 1rem;
-  overflow-y: auto;
 }
 
 @media screen and (max-width: 560px) {
   .room__header {
     top: 4.3rem;
-    padding-right: 2rem;
   }
 }
 
 .room__box {
   padding-left: 2rem;
   padding-right: 2rem;
-  height: 80.5vh;
+  height: auto;
   /* overflow-y: auto; */
   padding-bottom: 0;
+  background: var(--color-dark);
+  display: flex;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 560px) {
   .room__box {
     padding-left: 2.5rem;
-    padding-right: 2rem;
-    height: 80.5vh;
-    overflow-y: auto;
     padding-bottom: 0;
   }
 }
@@ -1071,8 +1069,8 @@ a {
 
 .room__conversation {
   margin-top: 1rem;
-  margin-bottom: 4rem;
-  height: 64%;
+  height: 40rem;
+  max-height: 40rem;
 }
 
 .threads h3 {
@@ -1086,7 +1084,6 @@ a {
   border-radius: var(--border-radius);
   overflow-y: auto;
   height: 100%;
-  margin-top: 28vh;
   padding: 0 2rem 4rem 2rem;
 }
 
@@ -1126,20 +1123,16 @@ a {
 }
 
 .room__message {
-  padding: 2rem;
-  position: absolute;
   z-index: 111;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  padding: 0 2rem 2rem 2rem;
   background: transparent;
 }
 
 .room__message > form > input {
   resize: none;
-  background-color: var(--color-dark-light);
-  color: var(--color-main-light);
-  border: none;
+  background-color: var(--color-main-light);
+  color: var(--color-dark-light);
+  border: 1px solid var(--color-light-gray);
   outline: none;
   border-radius: var(--border-radius);
   height: 4.5rem;

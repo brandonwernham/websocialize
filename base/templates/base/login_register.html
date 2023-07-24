@@ -12,7 +12,14 @@
         <h2 class="auth__tagline">Find your thread</h2>
 
         <form class="form" action="" method="POST">
-          {% csrf_token %}
+          {% csrf_token %} {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+          <hr />
+          {% endif %}
           <div class="form__group form__group">
             <label for="room_name">Username</label>
             <input
@@ -72,7 +79,14 @@
         <h2 class="auth__tagline">Find your thread</h2>
 
         <form class="form" action="" method="POST">
-          {% csrf_token %} {% for field in form %}
+          {% csrf_token %} {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+          <hr />
+          {% endif %} {% for field in form %}
           <div class="form__group form__group">
             <label for="room_name">{{field.label}}</label>
             {{field}}
