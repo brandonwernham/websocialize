@@ -929,7 +929,6 @@ a {
 .room,
 .participants {
   background: var(--color-dark);
-  max-height: 87.5vh;
   border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
