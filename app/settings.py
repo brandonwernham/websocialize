@@ -20,14 +20,14 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DATABASE_URL = "postgresql://postgres:tPglgORt0VqfbsYQVICW@containers-us-west-86.railway.app:5657/railway"
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ryxjaiigz1&d3=6_$avm^o-+g4gh5ut1gg*et!j*)3m_#kosf4"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "base.apps.BaseConfig",
     "rest_framework",
     "corsheaders",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -94,11 +95,11 @@ DATABASES = {
     "default": {
         #'ENGINE': 'django.db.backends.sqlite3',
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "railway",
-        "USER": "postgres",
-        "PASSWORD": "tPglgORt0VqfbsYQVICW",
-        "HOST": "containers-us-west-86.railway.app",
-        "PORT": "5657",
+        "NAME": os.environ.get("PGDATABASE"),
+        "USER": os.environ.get("PGUSER"),
+        "PASSWORD": os.environ.get("PGPASSWORD"),
+        "HOST": os.environ.get("PGHOST"),
+        "PORT": os.environ.get("PGPORT"),
     },
 }
 
@@ -137,15 +138,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-
 MEDIA_URL = "/images/"
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 MEDIA_ROOT = BASE_DIR / "static/images"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -153,3 +152,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+DEFAULT_FILE_STORAGE = os.environ.get("DEFAULT_FILE_STORAGE")
+STATICFILES_STORAGE = os.environ.get("STATICFILES_STORAGE")
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
+
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
